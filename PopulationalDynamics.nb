@@ -1,0 +1,9 @@
+uExact[t_]=DSolve[{u'[t]==0.55*u[t], u[0]==4},u[t],t][[1,1,2]]
+plot1 = ListPlot[{{0, 4}, {2, 10}, {4, 46}, {6, 66}, {8, 70}, {10, 69}, {12, 71}, {14, 71}, {16, 71}}, PlotStyle -> Red];
+plot2 = Plot[uExact[t], {t, 0, 16}];
+Show[plot1, plot2]
+
+
+uExact1[t_]=DSolve[{u'[t] == 0.012* u[t] *(71 - u[t]), u[0] == 4}, u[t], t][[1, 1, 2]]
+plot3 = Plot[uExact1[t], {t, 0, 16}, PlotRange -> All];
+Show[plot3, plot1]
