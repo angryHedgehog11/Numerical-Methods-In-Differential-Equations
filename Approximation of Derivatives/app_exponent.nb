@@ -1,10 +1,32 @@
+(*function*)
 f[x_] := Exp[x]
 
+(*formula for forward difference*)
 ApprD1[x_, h_] := (f[x+h] - f [x]) / h
 Plot[{f'[x], ApprD1[x,0.5], ApprD1[x,0.05], ApprD1[x, 0.005]},{x,0,3}, AspectRatio->1, PlotLegends->{"f'(x)", "h=0.5", "h=0.05", "h=0.005"}]
 
+(*formula for backwards difference*)
 ApprD2[x_,h_] := (f[x] - f[x - h]) / h
 Plot[{f'[x], ApprD2[x, 0.5], ApprD2[x, 0.05], ApprD2[x, 0.005]},{x, 0, 3}, AspectRatio->1, PlotLegends->{"f'(x)", "h=0.5", "h=0.05", "h=0.005"}]
 
+(*formula for central difference*)
 ApprD3[x_,h_] := (f[x+h] - f[x-h]) / (2h)
 Plot[{f'[x], ApprD3[x,0.5], ApprD3[x,0.05], ApprD3[x, 0.005]},{x,0,3}, AspectRatio->1, PlotLegends->{"f'(x)", "h=0.5", "h=0.05", "h=0.005"}]
+
+(*absolute mistake for forward difference approximation*)
+GraphicsRow[Table[Plot[f'[x]-ApprD1[x,h],{x,0,3}, PlotLabel->StringJoin["h=", ToString[h]]],{h,{0.5,0.05,0.005}}]]
+
+(*absolute mistake for backwards difference approximation*)
+GraphicsRow[Table[Plot[f'[x]-ApprD2[x,h],{x,0,3}, PlotLabel->StringJoin["h=", ToString[h]]],{h,{0.5,0.05,0.005}}]]
+
+(*absolute mistake for central difference approximation*)
+GraphicsRow[Table[Plot[f'[x]-ApprD3[x,h],{x,0,3}, PlotLabel->StringJoin["h=", ToString[h]]],{h,{0.5,0.05,0.005}}]]
+
+(*relative mistake for forward difference approximation*)
+GraphicsRow[Table[Plot[(f'[x]-ApprD1[x,h])/f'[x],{x,0,3},AxesOrigin->{0,0},PlotLabel->StringJoin["h=", ToString[h]]],{h,{0.5,0.05,0.005}}]]
+
+(*relative mistake for backwards difference approximation*)
+GraphicsRow[Table[Plot[(f'[x]-ApprD2[x,h])/f'[x],{x,0,3},AxesOrigin->{0,0},PlotLabel->StringJoin["h=", ToString[h]]],{h,{0.5,0.05,0.005}}]]
+
+(*relative mistake for central difference approximation*)
+GraphicsRow[Table[Plot[(f'[x]-ApprD3[x,h])/f'[x],{x,0,3},AxesOrigin->{0,0},PlotLabel->StringJoin["h=", ToString[h]]],{h,{0.5,0.05,0.005}}]]
