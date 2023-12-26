@@ -1,0 +1,10 @@
+f[x_] := Exp[x]
+
+ApprD1[x_, h_] := (f[x+h] - f [x]) / h
+Plot[{f'[x], ApprD1[x,0.5], ApprD1[x,0.05], ApprD1[x, 0.005]},{x,0,3}, AspectRatio->1, PlotLegends->{"f'(x)", "h=0.5", "h=0.05", "h=0.005"}]
+
+ApprD2[x_,h_] := (f[x] - f[x - h]) / h
+Plot[{f'[x], ApprD2[x, 0.5], ApprD2[x, 0.05], ApprD2[x, 0.005]},{x, 0, 3}, AspectRatio->1, PlotLegends->{"f'(x)", "h=0.5", "h=0.05", "h=0.005"}]
+
+ApprD3[x_,h_] := (f[x+h] - f[x-h]) / (2h)
+Plot[{f'[x], ApprD3[x,0.5], ApprD3[x,0.05], ApprD3[x, 0.005]},{x,0,3}, AspectRatio->1, PlotLegends->{"f'(x)", "h=0.5", "h=0.05", "h=0.005"}]
