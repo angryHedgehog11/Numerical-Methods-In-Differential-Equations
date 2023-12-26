@@ -1,0 +1,6 @@
+f[x_] := Sin[x]*Cos[x]*x
+p2[x_,x0_] := f[x0] + f'[x0](x-x0)+f''[x0](x - x0)^2/2!
+p3[x_,x0_] := p2 + f'''[x0](x-x0)^3/3!
+p4[x_,x0_] := p3 + f''''[x0](x-x0)^4/4!
+
+Plot[{f[x], p2[x,5],p3[x,5],p4[x,5]},{x,0,10}, PlotLegends->{"f(x)", "p2(x)", "p3(x)", "p4(x)"}, PlotStyle->Table[Thickness[0.01],{i,4}]]
