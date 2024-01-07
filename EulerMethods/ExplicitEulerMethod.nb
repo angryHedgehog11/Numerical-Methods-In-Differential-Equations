@@ -1,0 +1,27 @@
+explicitEuler[n_, f_, t0_, T_, u0_] := (
+    h = N[(T - t0)/n];
+    t = Table[t0 + i*h, {i, 0, n}];
+    y = Table[0, {i, 0, n}];
+    
+    y[[1]] = N[u0];
+    For[i = 1, i <= n, i++,
+      y[[i + 1]] = y[[i]] + h*f[t[[i]], y[[i]]]
+      ];
+    
+    {t, y}
+    ) 
+
+exact[x_] = DSolve[{u'[x] == -10 u[x], u[0] == 1}, u[x], x][[1, 1, 2]];
+plotExact = Plot[exact[x], {x, 0, 1}, PlotStyle -> {Red, Thickness[0.01]},   PlotRange -> All];
+
+f[t_, u_] := -10 u
+n = 100(*4,20*);
+{times, appr} = explicitEuler[n, f, 0, 1, 1];
+plotAppr = ListPlot[Transpose[{times, appr }], PlotMarkers -> \[FilledCircle]];
+Show[plotExact, plotAppr] 
+
+Manipulate[
+  {times, appr} = explicitEuler[n, f, 0, 1, 1];
+  plotAppr = ListPlot[Transpose[{times, appr }], PlotMarkers -> \[FilledCircle]];
+  Show[plotExact, plotAppr],
+  {n, 4, 100, 4}] 
