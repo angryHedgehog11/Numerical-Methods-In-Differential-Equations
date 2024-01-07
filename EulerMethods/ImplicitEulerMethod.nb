@@ -1,0 +1,25 @@
+implicitEuler[n_, f_, t0_, T_, u0_] := (
+    h = N[(T - t0)/n];
+    t = Table[t0 + i*h, {i, 0, n}];
+    y = Table[0, {i, 0, n}];
+    
+    y[[1]] = N[u0];
+    For[i = 1, i <= n, i++,
+      initialGuess = y[[i]] + h*f[t[[i]], y[[i]]];
+      y[[i + 1]] =  yNew /. FindRoot[yNew ==  y[[i]] + h*f[t[[i + 1]], yNew], {yNew, initialGuess}]
+      ];
+    
+    {t, y}
+    ) 
+
+f[t_,u_] := -10*u
+n = 20(*4,100*);
+{times, appr} = implicitEuler[n, f, 0, 1, 1];
+plotAppr = ListPlot[Transpose[{times, appr }], PlotMarkers -> \[FilledCircle]];
+Show[plotExact, plotAppr] 
+
+Manipulate[
+  {times, appr} = explicitEuler[n, f, 0, 1, 1];
+  plotAppr = ListPlot[Transpose[{times, appr }], PlotMarkers -> \[FilledCircle]];
+  Show[plotExact, plotAppr],
+  {n, 4, 100, 4}] 
